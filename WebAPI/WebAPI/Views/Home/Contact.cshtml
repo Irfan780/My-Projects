@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="http://www.google.com/jsapi"></script>
+
+<script type="text/javascript">
+
+var scope = "https://www.googleapis.com/auth/moderator";
+var token = '';
+
+
+function create(){
+     //if (token == '')
+    // token = doCheck();
+    jQuery.support.cors = true;
+     var loginData = {
+         grant_type: 'password',
+         username: 'rakesh.joshi@amrop.in',
+         password: 'rakesh@1111',
+         client_id: 'ece2fa31-d393-4b9c-b9eb-bec644174676',
+         client_secret: 'skhbhnwxxvb6ffi09ikg6ku7v',
+         scope: 'openid profile api email'
+     };
+     
+     var getTokenUrl = "https://amropindia.invenias.com/identity/connect/token";
+     var generalApiUrl = "https://amropindia.invenias.com/api/swagger/docs/v1";
+     $.ajax({
+         url: getTokenUrl,
+         data: loginData,
+         type: "GET",
+         success: function (result) {
+             alertData(result);
+         }
+     });
+}
+
+function setHeader(xhr) {
+
+  xhr.setRequestHeader('Authorization', token);
+}
+
+function doLogin(){
+    if (token == ''){
+       token = google.accounts.user.login(scope);
+    }else{
+       alert('already logged');
+    }
+}
+
+
+function doCheck(){
+    token = google.accounts.user.checkLogin(scope);
+    return token;
+}
+</script>
+...
+...
+<div data-role="content">
+    <input type="button" value="Login" onclick="doLogin();">
+    <input type="button" value="Get data" onclick="getModerator();">
+    <input type="button" value="Create" onclick="create();">
+</div><!-- /content -->
